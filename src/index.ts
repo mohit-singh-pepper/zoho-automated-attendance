@@ -65,7 +65,6 @@ const run = async () => {
 		}
 
 		await sleep(5000)
-		await printLogs(driver)
 
 		await driver.close()
 	} catch (err) {
@@ -74,8 +73,7 @@ const run = async () => {
 
 		await driver.close()
 		await driver.quit()
-
-		return
+		throw new Error('Failed to execute script check-in')
 	}
 }
 
