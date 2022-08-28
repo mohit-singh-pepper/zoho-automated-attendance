@@ -35,3 +35,10 @@ jobs:
                   ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
                   ZOHO_PASSWORD: ${{ secrets.ZOHO_PASSWORD }}
                   EXECUTION_STATUS: check-out
+
+            - name: update cookies
+              uses: test-room-7/action-update-file@v1
+              with:
+                  file-path: cookies.json
+                  commit-msg: 'ci: cookies'
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
