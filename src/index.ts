@@ -4,6 +4,7 @@ import { Builder, By, Key, logging, WebDriver } from 'selenium-webdriver'
 import { config } from 'dotenv'
 import { join } from 'path'
 import { Options } from 'selenium-webdriver/chrome.js'
+import { readFileSync, writeFileSync } from 'fs'
 
 const { Type } = logging
 
@@ -13,62 +14,68 @@ config({
 })
 
 let runs = 0
+const dashboardURL = 'https://people.zoho.in/peppercontentglobal/zp#home/dashboard'
 
 const executionStatus = process.env.EXECUTION_STATUS ?? ''
 
 const handleLogs = (entries: logging.Entry[]) => {
 	entries = entries.sort((a, b) => a.timestamp - b.timestamp)
 	for (let index = 0; index < entries.length; index++) {
-		const entry = entries[index]
-		console.log(entry)
+		// const entry = entries[index]
+		// console.log(entry)
 	}
 }
 
 const sleep = async (timeout = 3000) => {
 	return await new Promise((resolve) => setTimeout(resolve, timeout))
 }
+const isDebug = process.env.NODE_ENV === 'development'
+
 const run = async (): Promise<void> => {
 	const options = new Options()
 
-	options.addArguments('--headless')
+	const cookies: { accounts: any[]; people: any[] } = JSON.parse(
+		readFileSync(join(__dirname, '..', 'cookies.json')).toString()
+	)
+
+	if (!isDebug) {
+		options.addArguments('--headless')
+	}
+
 	;['--incognito', '--js-flags=--expose-gc'].forEach(function (v) {
 		options.addArguments(v)
 	})
 	options.setLoggingPrefs({ performance: 'ALL', browser: 'ALL', client: 'ALL' })
 
+	options.setUserPreferences({
+		'profile.default_content_setting_values.geolocation': 2,
+	})
+
 	const driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build()
 	try {
-		await driver.get(
-			'https://accounts.zoho.in/signin?servicename=zohopeople&signupurl=https://www.zoho.in/people/signup.html'
-		)
-		await driver.manage().window().setRect({ width: 1440, height: 900 })
-		await sleep(2000)
+		await addCookies(cookies, driver)
+		await driver.get(dashboardURL)
+		const current_url = await driver.getCurrentUrl()
 
-		await driver.findElement(By.id('login_id')).sendKeys(process.env.ZOHO_EMAIL!)
+		if (current_url !== dashboardURL) {
+			if (!isDebug) {
+				await handleLogin(driver)
+			}
+			await driver.get(dashboardURL)
+		}
 		await sleep(2000)
-
-		await driver.findElement(By.id('login_id')).sendKeys(Key.ENTER)
+		const status_tag = await driver.findElement(By.id('ZPD_Top_Att_Stat'))
+		const current_status = await status_tag.getText()
 		await sleep(2000)
-
-		await driver.findElement(By.id('password')).sendKeys(process.env.ZOHO_PASSWORD!)
-		await sleep(2000)
-
-		await driver.findElement(By.id('password')).sendKeys(Key.ENTER)
-		await sleep(4000)
-
-		await driver.get('https://people.zoho.in/peppercontentglobal/zp#attendance/entry/listview')
-		await sleep(2000)
-
-		const current_status = await driver.findElement(By.id('ZPD_Top_Att_Stat'))
-		await sleep(2000)
-		if ((await current_status.getText()).toLowerCase() === executionStatus.toLowerCase()) {
+		console.log(current_status, status_tag)
+		if (current_status.toLowerCase() === executionStatus.toLowerCase()) {
 			console.log('executing:', executionStatus)
-			await driver.findElement(By.css('.chlodIng')).click()
+			await status_tag.click()
 		} else {
 			runs += 1
 
 			console.log('Failed to do:', executionStatus)
-			console.log('Current status:', await current_status.getText())
+			console.log('Current status:', current_status)
 			throw new Error('Failed to do: ' + executionStatus)
 		}
 
@@ -76,11 +83,7 @@ const run = async (): Promise<void> => {
 
 		await sleep(5000)
 
-		await driver.close()
-
-		await printLogs(driver)
-
-		return
+		if (!isDebug) await driver.close()
 	} catch (err) {
 		console.error(err)
 		await printLogs(driver)
@@ -104,6 +107,54 @@ run()
 		console.log(err)
 		process.exit(1)
 	})
+
+async function addCookies(cookies: { accounts: any[]; people: any[] }, driver: WebDriver) {
+	// for accounts
+	await driver.get('https://accounts.zoho.in/')
+	await driver.manage().window().setRect({ width: 1440, height: 900 })
+
+	await addCookie(cookies.accounts, driver)
+	await sleep(2000)
+
+	// for people
+	await driver.get('https://people.zoho.in/')
+	await addCookie(cookies.people, driver)
+}
+
+async function addCookie(cookies: any[], driver: WebDriver) {
+	for (let index = 0; index < cookies.length; index++) {
+		const cookie = cookies[index]
+		await driver.manage().addCookie(cookie)
+	}
+}
+
+async function handleLogin(driver: WebDriver) {
+	await driver.get('https://accounts.zoho.in/signin')
+
+	await driver.findElement(By.id('login_id')).sendKeys(process.env.ZOHO_EMAIL!)
+	await sleep(2000)
+
+	await driver.findElement(By.id('login_id')).sendKeys(Key.ENTER)
+	await sleep(2000)
+
+	await driver.findElement(By.id('password')).sendKeys(process.env.ZOHO_PASSWORD!)
+	await sleep(2000)
+
+	await driver.findElement(By.id('password')).sendKeys(Key.ENTER)
+	await sleep(4000)
+
+	await driver.get('https://accounts.zoho.in/')
+
+	const accounts = await driver.manage().getCookies()
+	console.log('accounts', accounts)
+
+	await driver.get(dashboardURL)
+	const people = await driver.manage().getCookies()
+	console.log('people', people)
+
+	const cookies = { accounts, people }
+	writeFileSync(join(__dirname, '..', 'cookies.json'), JSON.stringify(cookies))
+}
 
 async function printLogs(driver: WebDriver) {
 	await sleep(1000)
