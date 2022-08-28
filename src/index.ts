@@ -61,7 +61,7 @@ const run = async () => {
 			await driver.findElement(By.css('.chlodIng')).click()
 		}
 
-		await sleep(1000)
+		await sleep(5000)
 		await printLogs(driver)
 
 		await driver.close()
