@@ -35,6 +35,7 @@ jobs:
                   ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
                   ZOHO_PASSWORD: ${{ secrets.ZOHO_PASSWORD }}
                   EXECUTION_STATUS: check-in
+                  SLACK_HOOK: ${{ secrets.SLACK_HOOK }}
             - name: update cookies
               uses: test-room-7/action-update-file@v1
               with:
