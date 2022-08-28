@@ -62,6 +62,9 @@ const run = async () => {
 		if ((await current_status.getText()).toLowerCase() === executionStatus.toLowerCase()) {
 			console.log('executing:', executionStatus)
 			await driver.findElement(By.css('.chlodIng')).click()
+		} else {
+			console.log('Failed to do:', executionStatus)
+			throw new Error('Failed to do: ' + executionStatus)
 		}
 
 		await sleep(5000)
