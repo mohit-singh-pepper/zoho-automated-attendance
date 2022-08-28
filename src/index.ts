@@ -52,6 +52,9 @@ const run = async () => {
 		await sleep(2000)
 
 		await driver.findElement(By.id('password')).sendKeys(Key.ENTER)
+		await sleep(4000)
+
+		await driver.get('https://people.zoho.in/peppercontentglobal/zp#attendance/entry/listview')
 		await sleep(2000)
 
 		const current_status = await driver.findElement(By.id('ZPD_Top_Att_Stat'))
