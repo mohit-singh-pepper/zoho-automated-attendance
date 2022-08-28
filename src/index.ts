@@ -28,7 +28,7 @@ const sleep = async (timeout = 3000) => {
 const run = async () => {
 	const options = new Options()
 
-	// options.addArguments('--headless')
+	options.addArguments('--headless')
 	;['--incognito', '--js-flags=--expose-gc'].forEach(function (v) {
 		options.addArguments(v)
 	})
