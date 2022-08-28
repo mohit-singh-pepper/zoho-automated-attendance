@@ -5,6 +5,7 @@ import { config } from 'dotenv'
 import { join } from 'path'
 import { Options } from 'selenium-webdriver/chrome.js'
 import { readFileSync, writeFileSync } from 'fs'
+import axios from 'axios'
 
 const { Type } = logging
 
@@ -84,6 +85,13 @@ const run = async (): Promise<void> => {
 		await sleep(5000)
 
 		if (!isDebug) await driver.close()
+		if (process.env.SLACK_HOOK) {
+			await axios.post(process.env.SLACK_HOOK, {
+				text: `${executionStatus} at ${new Date().toLocaleString('en-US', {
+					timeZone: 'Asia/Kolkata',
+				})}`,
+			})
+		}
 	} catch (err) {
 		console.error(err)
 		await printLogs(driver)
@@ -93,6 +101,17 @@ const run = async (): Promise<void> => {
 		if (runs === 0) {
 			runs += 1
 			return run()
+		}
+		try {
+			if (process.env.SLACK_HOOK) {
+				await axios.post(process.env.SLACK_HOOK, {
+					text: `${executionStatus} failed at ${new Date().toLocaleString('en-US', {
+						timeZone: 'Asia/Kolkata',
+					})}`,
+				})
+			}
+		} catch (err) {
+			console.error(err)
 		}
 		throw new Error('Failed to execute script check-in')
 	}
