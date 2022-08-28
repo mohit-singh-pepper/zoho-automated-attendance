@@ -21,8 +21,8 @@ const executionStatus = process.env.EXECUTION_STATUS ?? ''
 const handleLogs = (entries: logging.Entry[]) => {
 	entries = entries.sort((a, b) => a.timestamp - b.timestamp)
 	for (let index = 0; index < entries.length; index++) {
-		// const entry = entries[index]
-		// console.log(entry)
+		const entry = entries[index]
+		console.log(entry)
 	}
 }
 
