@@ -6,6 +6,7 @@ import { join } from 'path'
 import { Options } from 'selenium-webdriver/chrome.js'
 import { readFileSync, writeFileSync } from 'fs'
 import axios from 'axios'
+import { getPayload } from './getPayload'
 
 const { Type } = logging
 
@@ -32,6 +33,7 @@ const sleep = async (timeout = 3000) => {
 }
 const isDebug = process.env.NODE_ENV === 'development'
 
+const executionString = executionStatus === 'check-in' ? 'Check-In' : 'Check-Out'
 const run = async (): Promise<void> => {
 	const options = new Options()
 
@@ -59,15 +61,15 @@ const run = async (): Promise<void> => {
 		const current_url = await driver.getCurrentUrl()
 
 		if (current_url !== dashboardURL) {
-			if (!isDebug) {
+			if (!isDebug || process.env.ALLOW_LOGIN_IN_DEBUG === 'true') {
 				await handleLogin(driver)
 			}
 			await driver.get(dashboardURL)
 		}
-		await sleep(2000)
+		await sleep(1000)
 		const status_tag = await driver.findElement(By.id('ZPD_Top_Att_Stat'))
 		const current_status = await status_tag.getText()
-		await sleep(2000)
+		await sleep(1000)
 		console.log(current_status, status_tag)
 		if (current_status.toLowerCase() === executionStatus.toLowerCase()) {
 			console.log('executing:', executionStatus)
@@ -87,9 +89,12 @@ const run = async (): Promise<void> => {
 		if (!isDebug) await driver.close()
 		if (process.env.SLACK_HOOK) {
 			await axios.post(process.env.SLACK_HOOK, {
-				text: `${executionStatus} at ${new Date().toLocaleString('en-US', {
-					timeZone: 'Asia/Kolkata',
-				})}`,
+				...getPayload(
+					`${executionString} successful at ${new Date().toLocaleString('en-US', {
+						timeZone: 'Asia/Kolkata',
+					})}`,
+					true
+				),
 			})
 		}
 	} catch (err) {
@@ -105,9 +110,12 @@ const run = async (): Promise<void> => {
 		try {
 			if (process.env.SLACK_HOOK) {
 				await axios.post(process.env.SLACK_HOOK, {
-					text: `${executionStatus} failed at ${new Date().toLocaleString('en-US', {
-						timeZone: 'Asia/Kolkata',
-					})}`,
+					...getPayload(
+						`${executionString} failed at ${new Date().toLocaleString('en-US', {
+							timeZone: 'Asia/Kolkata',
+						})}`,
+						false
+					),
 				})
 			}
 		} catch (err) {
@@ -133,7 +141,7 @@ async function addCookies(cookies: { accounts: any[]; people: any[] }, driver: W
 	await driver.manage().window().setRect({ width: 1440, height: 900 })
 
 	await addCookie(cookies.accounts, driver)
-	await sleep(2000)
+	await sleep(1000)
 
 	// for people
 	await driver.get('https://people.zoho.in/')
@@ -151,13 +159,13 @@ async function handleLogin(driver: WebDriver) {
 	await driver.get('https://accounts.zoho.in/signin')
 
 	await driver.findElement(By.id('login_id')).sendKeys(process.env.ZOHO_EMAIL!)
-	await sleep(2000)
+	await sleep(1000)
 
 	await driver.findElement(By.id('login_id')).sendKeys(Key.ENTER)
-	await sleep(2000)
+	await sleep(1000)
 
 	await driver.findElement(By.id('password')).sendKeys(process.env.ZOHO_PASSWORD!)
-	await sleep(2000)
+	await sleep(1000)
 
 	await driver.findElement(By.id('password')).sendKeys(Key.ENTER)
 	await sleep(4000)
@@ -172,7 +180,7 @@ async function handleLogin(driver: WebDriver) {
 	console.log('people', people)
 
 	const cookies = { accounts, people }
-	writeFileSync(join(__dirname, '..', 'cookies.json'), JSON.stringify(cookies))
+	writeFileSync(join(__dirname, '..', 'cookies.json'), JSON.stringify(cookies, undefined, 4))
 }
 
 async function printLogs(driver: WebDriver) {
