@@ -12,6 +12,8 @@ config({
 	path: join(__dirname, '..', '.env'),
 })
 
+let runs = 0
+
 const executionStatus = process.env.EXECUTION_STATUS ?? ''
 
 const handleLogs = (entries: logging.Entry[]) => {
@@ -25,7 +27,7 @@ const handleLogs = (entries: logging.Entry[]) => {
 const sleep = async (timeout = 3000) => {
 	return await new Promise((resolve) => setTimeout(resolve, timeout))
 }
-const run = async () => {
+const run = async (): Promise<void> => {
 	const options = new Options()
 
 	options.addArguments('--headless')
@@ -63,19 +65,32 @@ const run = async () => {
 			console.log('executing:', executionStatus)
 			await driver.findElement(By.css('.chlodIng')).click()
 		} else {
+			runs += 1
+
 			console.log('Failed to do:', executionStatus)
+			console.log('Current status:', await current_status.getText())
 			throw new Error('Failed to do: ' + executionStatus)
 		}
+
+		runs += 1
 
 		await sleep(5000)
 
 		await driver.close()
+
+		await printLogs(driver)
+
+		return
 	} catch (err) {
 		console.error(err)
 		await printLogs(driver)
 
 		await driver.close()
 		await driver.quit()
+		if (runs === 0) {
+			runs += 1
+			return run()
+		}
 		throw new Error('Failed to execute script check-in')
 	}
 }
@@ -97,4 +112,5 @@ async function printLogs(driver: WebDriver) {
 	const performanceLogs = await driver.manage().logs().get('performance')
 	const logs: logging.Entry[] = [...browserLogs, ...driverLogs, ...performanceLogs]
 	handleLogs(logs)
+	return logs
 }
