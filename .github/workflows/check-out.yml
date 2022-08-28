@@ -29,7 +29,7 @@ jobs:
             - run: npm ci
             - run: npm run build --if-present
 
-            - name: Check-In
+            - name: Check-Out
               run: node ./dist/index.js
               env:
                   ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
