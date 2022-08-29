@@ -7,6 +7,9 @@ on:
     schedule:
         - cron: '0 1 * * 1-5'
     workflow_dispatch:
+    repository_dispatch:
+        types: [check-in]
+
 
 jobs:
     build:
