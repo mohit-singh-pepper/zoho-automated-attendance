@@ -4,7 +4,7 @@ import { Builder, By, Key, logging, WebDriver } from 'selenium-webdriver'
 import { config } from 'dotenv'
 import { join } from 'path'
 import { Options } from 'selenium-webdriver/chrome.js'
-import { readFileSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import axios from 'axios'
 import { getPayload } from './getPayload'
 
@@ -37,9 +37,11 @@ const executionString = executionStatus === 'check-in' ? 'Check-In' : 'Check-Out
 const run = async (): Promise<void> => {
 	const options = new Options()
 
-	const cookies: { accounts: any[]; people: any[] } = JSON.parse(
-		readFileSync(join(__dirname, '..', 'cookies.json')).toString()
-	)
+	let cookies: { accounts: any[]; people: any[] } = { accounts: [], people: [] }
+	const cookie_location = join(__dirname, '..', 'cookies.json')
+	if (existsSync(cookie_location)) {
+		cookies = JSON.parse(readFileSync(cookie_location).toString())
+	}
 
 	if (!isDebug) {
 		options.addArguments('--headless')

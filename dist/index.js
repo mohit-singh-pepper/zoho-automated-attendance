@@ -33,7 +33,11 @@ const isDebug = process.env.NODE_ENV === 'development';
 const executionString = executionStatus === 'check-in' ? 'Check-In' : 'Check-Out';
 const run = async () => {
     const options = new chrome_js_1.Options();
-    const cookies = JSON.parse((0, fs_1.readFileSync)((0, path_1.join)(__dirname, '..', 'cookies.json')).toString());
+    let cookies = { accounts: [], people: [] };
+    const cookie_location = (0, path_1.join)(__dirname, '..', 'cookies.json');
+    if ((0, fs_1.existsSync)(cookie_location)) {
+        cookies = JSON.parse((0, fs_1.readFileSync)(cookie_location).toString());
+    }
     if (!isDebug) {
         options.addArguments('--headless');
     }
