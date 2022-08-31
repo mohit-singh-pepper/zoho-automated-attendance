@@ -58,11 +58,11 @@ const run = async (): Promise<void> => {
 
 	const driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build()
 	try {
-		await addCookies(cookies, driver)
+		const cookie_status = await addCookies(cookies, driver)
 		await driver.get(dashboardURL)
 		const current_url = await driver.getCurrentUrl()
 
-		if (current_url !== dashboardURL) {
+		if (cookie_status === false || current_url !== dashboardURL) {
 			if (!isDebug || process.env.ALLOW_LOGIN_IN_DEBUG === 'true') {
 				await handleLogin(driver)
 			}
@@ -139,14 +139,21 @@ run()
 
 async function addCookies(cookies: { accounts: any[]; people: any[] }, driver: WebDriver) {
 	// for accounts
-	await driver.get('https://accounts.zoho.in/')
-	await driver.manage().window().setRect({ width: 1440, height: 900 })
+	try {
+		await driver.get('https://accounts.zoho.in/')
+		await driver.manage().window().setRect({ width: 1440, height: 900 })
 
-	await addCookie(cookies.accounts, driver)
+		await addCookie(cookies.accounts, driver)
 
-	// for people
-	await driver.get('https://people.zoho.in/')
-	await addCookie(cookies.people, driver)
+		// for people
+		await driver.get('https://people.zoho.in/')
+		await addCookie(cookies.people, driver)
+
+		return true
+	} catch {
+		console.log('adding cookie failed')
+		return false
+	}
 }
 
 async function addCookie(cookies: any[], driver: WebDriver) {
@@ -185,6 +192,7 @@ async function handleLogin(driver: WebDriver) {
 }
 
 async function printLogs(driver: WebDriver) {
+	return ''
 	await sleep(1000)
 	const browserLogs = await driver.manage().logs().get('browser')
 	const driverLogs = await driver.manage().logs().get('driver')
