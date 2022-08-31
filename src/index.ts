@@ -84,7 +84,7 @@ const run = async (): Promise<void> => {
 
 		runs += 1
 
-		await sleep(5000)
+		await sleep(2_000)
 
 		if (!isDebug) await driver.close()
 		if (process.env.SLACK_HOOK) {
@@ -141,7 +141,6 @@ async function addCookies(cookies: { accounts: any[]; people: any[] }, driver: W
 	await driver.manage().window().setRect({ width: 1440, height: 900 })
 
 	await addCookie(cookies.accounts, driver)
-	await sleep(1000)
 
 	// for people
 	await driver.get('https://people.zoho.in/')
@@ -159,16 +158,16 @@ async function handleLogin(driver: WebDriver) {
 	await driver.get('https://accounts.zoho.in/signin')
 
 	await driver.findElement(By.id('login_id')).sendKeys(process.env.ZOHO_EMAIL!)
-	await sleep(1000)
 
 	await driver.findElement(By.id('login_id')).sendKeys(Key.ENTER)
 	await sleep(1000)
 
 	await driver.findElement(By.id('password')).sendKeys(process.env.ZOHO_PASSWORD!)
-	await sleep(1000)
 
 	await driver.findElement(By.id('password')).sendKeys(Key.ENTER)
-	await sleep(4000)
+
+	// wait until url changes for selenium
+	await sleep(4_000)
 
 	await driver.get('https://accounts.zoho.in/')
 
