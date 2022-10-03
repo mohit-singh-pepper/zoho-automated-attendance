@@ -4,9 +4,10 @@ import { Builder, By, Key, logging, WebDriver } from 'selenium-webdriver'
 import { config } from 'dotenv'
 import { join } from 'path'
 import { Options } from 'selenium-webdriver/chrome.js'
-import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { existsSync } from 'fs'
 import axios from 'axios'
 import { getPayload } from './getPayload'
+import { load_cookies, save_cookie } from './handleCookie'
 
 const { Type } = logging
 
@@ -40,7 +41,7 @@ const run = async (): Promise<void> => {
 	let cookies: { accounts: any[]; people: any[] } = { accounts: [], people: [] }
 	const cookie_location = join(__dirname, '..', 'cookies.json')
 	if (existsSync(cookie_location)) {
-		cookies = JSON.parse(readFileSync(cookie_location).toString())
+		cookies = load_cookies(cookie_location)
 	}
 
 	if (!isDebug) {
@@ -188,7 +189,7 @@ async function handleLogin(driver: WebDriver) {
 	console.log('people', people)
 
 	const cookies = { accounts, people }
-	writeFileSync(join(__dirname, '..', 'cookies.json'), JSON.stringify(cookies, undefined, 4))
+	save_cookie(join(__dirname, '..', 'cookies.json'), cookies)
 }
 
 async function printLogs(driver: WebDriver) {
