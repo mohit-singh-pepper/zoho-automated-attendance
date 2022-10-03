@@ -11,6 +11,7 @@ const chrome_js_1 = require("selenium-webdriver/chrome.js");
 const fs_1 = require("fs");
 const axios_1 = __importDefault(require("axios"));
 const getPayload_1 = require("./getPayload");
+const handleCookie_1 = require("./handleCookie");
 const { Type } = selenium_webdriver_1.logging;
 console.log(Type);
 (0, dotenv_1.config)({
@@ -36,7 +37,7 @@ const run = async () => {
     let cookies = { accounts: [], people: [] };
     const cookie_location = (0, path_1.join)(__dirname, '..', 'cookies.json');
     if ((0, fs_1.existsSync)(cookie_location)) {
-        cookies = JSON.parse((0, fs_1.readFileSync)(cookie_location).toString());
+        cookies = (0, handleCookie_1.load_cookies)(cookie_location);
     }
     if (!isDebug) {
         options.addArguments('--headless');
@@ -151,7 +152,7 @@ async function handleLogin(driver) {
     const people = await driver.manage().getCookies();
     console.log('people', people);
     const cookies = { accounts, people };
-    (0, fs_1.writeFileSync)((0, path_1.join)(__dirname, '..', 'cookies.json'), JSON.stringify(cookies, undefined, 4));
+    (0, handleCookie_1.save_cookie)((0, path_1.join)(__dirname, '..', 'cookies.json'), cookies);
 }
 async function printLogs(driver) {
     return '';
