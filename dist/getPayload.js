@@ -21,7 +21,7 @@ const getPayload = (message, success) => ({
                     type: 'section',
                     text: {
                         type: 'mrkdwn',
-                        text: `You have a new request:\n*<https://people.zoho.in/peppercontentglobal/zp#home/dashboard|${success ? 'Successful' : 'Failed'}> ${message}*`,
+                        text: `You have a new request:\n*<https://people.zoho.in/${process.env.ZOHO_LOCATION_URL}/zp#home/dashboard|${success ? 'Successful' : 'Failed'}> ${message}*`,
                     },
                 },
                 {
@@ -35,7 +35,7 @@ const getPayload = (message, success) => ({
                                 text: 'Check-In Manually',
                             },
                             style: success ? 'primary' : 'danger',
-                            url: 'https://people.zoho.in/peppercontentglobal/zp#home/dashboard',
+                            url: `https://people.zoho.in/${process.env.ZOHO_LOCATION_URL}/zp#home/dashboard`,
                             action_id: 'button-action-0',
                         },
                         {
@@ -46,7 +46,7 @@ const getPayload = (message, success) => ({
                                 text: 'Check-Out Manually',
                             },
                             style: success ? 'primary' : 'danger',
-                            url: 'https://people.zoho.in/peppercontentglobal/zp#home/dashboard',
+                            url: `https://people.zoho.in/${process.env.ZOHO_LOCATION_URL}/zp#home/dashboard`,
                             action_id: 'button-action-1',
                         },
                     ],

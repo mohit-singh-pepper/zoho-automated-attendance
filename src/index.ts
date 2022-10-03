@@ -17,7 +17,7 @@ config({
 })
 
 let runs = 0
-const dashboardURL = 'https://people.zoho.in/peppercontentglobal/zp#home/dashboard'
+const dashboardURL = `https://people.zoho.in/${process.env.ZOHO_LOCATION_URL}/zp#home/dashboard`
 
 const executionStatus = process.env.EXECUTION_STATUS ?? ''
 

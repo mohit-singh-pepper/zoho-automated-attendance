@@ -18,7 +18,7 @@ console.log(Type);
     path: (0, path_1.join)(__dirname, '..', '.env'),
 });
 let runs = 0;
-const dashboardURL = 'https://people.zoho.in/peppercontentglobal/zp#home/dashboard';
+const dashboardURL = `https://people.zoho.in/${process.env.ZOHO_LOCATION_URL}/zp#home/dashboard`;
 const executionStatus = (_a = process.env.EXECUTION_STATUS) !== null && _a !== void 0 ? _a : '';
 const handleLogs = (entries) => {
     entries = entries.sort((a, b) => a.timestamp - b.timestamp);
