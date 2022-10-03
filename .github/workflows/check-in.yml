@@ -38,6 +38,8 @@ jobs:
                   ZOHO_PASSWORD: ${{ secrets.ZOHO_PASSWORD }}
                   EXECUTION_STATUS: check-in
                   SLACK_HOOK: ${{ secrets.SLACK_HOOK }}
+                  ENCRYPTION_IV: ${{ secrets.ENCRYPTION_IV }}
+                  ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
             - name: update cookies
               uses: test-room-7/action-update-file@v1
               with:
