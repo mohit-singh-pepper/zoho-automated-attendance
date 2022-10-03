@@ -1,25 +1,17 @@
 {
     "accounts": [
         {
-            "domain": ".zoho.in",
-            "httpOnly": true,
-            "name": "wms-tkp-token",
-            "path": "/",
-            "sameSite": "None",
-            "secure": true,
-            "value": "60015448180-c22777f4-19152cb67a0228bad2801dc070f8cd3d"
-        },
-        {
             "domain": "accounts.zoho.in",
             "httpOnly": false,
             "name": "iamcsr",
             "path": "/",
             "sameSite": "None",
             "secure": true,
-            "value": "985cba42a11cb01e0b37721c1564db507970071e600af25ce44024fde9675c45999b25075acb4478b2474df4b28d35bd950a6d9535d97e19260b9e93c492aa87"
+            "value": "4cb9eeff5a15a442f3497b7e1727b5e70fe8d94155d4438ccc589973f5b22b75b56e6addb257681b3ba23bdc507a7ec619119fdfd590e23f8a55158c29de0b33"
         },
         {
             "domain": "accounts.zoho.in",
+            "expiry": 1667368683,
             "httpOnly": false,
             "name": "_z_identity",
             "path": "/",
@@ -37,23 +29,13 @@
         },
         {
             "domain": ".zoho.in",
-            "expiry": 1664981372,
+            "expiry": 1667800683,
             "httpOnly": true,
             "name": "_iambdt",
             "path": "/",
             "sameSite": "None",
             "secure": true,
-            "value": "b46b49110b66906a74ae2af3cbb3ff824e9359d189ab496531051a5ea43a03f5011d73e0649435852ce5e49e247704fc4a250eb1c2869c78caf1f12c442b9a7f"
-        },
-        {
-            "domain": ".zoho.in",
-            "expiry": 1664981372,
-            "httpOnly": true,
-            "name": "_iamadt",
-            "path": "/",
-            "sameSite": "None",
-            "secure": true,
-            "value": "db4ee6c4eb99a25da606fdbec2549765c7aab4e3812fccb4c9035d427d53fbe3ef55ff8bff0144ca3a7bafdcf5d949a2d6fe8ef898ad24bd694bca78db660a89"
+            "value": "af65c13b85868980a18b507308d4baa6128f2c39f6ad56fc3a24bdf79397b174ccaeca078d8a3f92a0daccb574e2bac0a0fc333b982d81d12de6a7ae5d03e425"
         },
         {
             "domain": ".zoho.in",
@@ -69,18 +51,29 @@
             "name": "6e73717622",
             "path": "/",
             "secure": true,
-            "value": "3bcf233c3836eb7934b6f3edc257f951"
+            "value": "94da0c17b67b4320ada519c299270f95"
+        },
+        {
+            "domain": ".zoho.in",
+            "expiry": 1667800683,
+            "httpOnly": true,
+            "name": "_iamadt",
+            "path": "/",
+            "sameSite": "None",
+            "secure": true,
+            "value": "db4ee6c4eb99a25da606fdbec25497655eca7d21194fcc89fe894cfde73592f21254727a5dcc2158045911cdff193407fe4c4b10641006e990604ecbd47ac3fd"
         },
         {
             "domain": ".accounts.zoho.in",
-            "httpOnly": true,
-            "name": "JSESSIONID",
+            "httpOnly": false,
+            "name": "_zcsr_tmp",
             "path": "/",
+            "sameSite": "Strict",
             "secure": true,
-            "value": "A025054DD3BF754E6AA702F0F22DF514"
+            "value": "4d98bd1a6e6cbd6e33481aacf969259380cc9af03f6d65311112b671604b26d663eaa338df0f05a5b95665754bcf0dc7adc4a7cd30bbc1b805ea3154ee5266bf"
         },
         {
-            "domain": "accounts.zoho.in",
+            "domain": ".accounts.zoho.in",
             "httpOnly": true,
             "name": "JSESSIONID",
             "path": "/",
@@ -94,7 +87,7 @@
             "path": "/",
             "sameSite": "Strict",
             "secure": true,
-            "value": "985cba42a11cb01e0b37721c1564db507970071e600af25ce44024fde9675c45999b25075acb4478b2474df4b28d35bd950a6d9535d97e19260b9e93c492aa87"
+            "value": "4cb9eeff5a15a442f3497b7e1727b5e70fe8d94155d4438ccc589973f5b22b75b56e6addb257681b3ba23bdc507a7ec619119fdfd590e23f8a55158c29de0b33"
         },
         {
             "domain": ".accounts.zoho.in",
@@ -106,13 +99,12 @@
             "value": "4d98bd1a6e6cbd6e33481aacf969259380cc9af03f6d65311112b671604b26d663eaa338df0f05a5b95665754bcf0dc7adc4a7cd30bbc1b805ea3154ee5266bf"
         },
         {
-            "domain": ".accounts.zoho.in",
-            "httpOnly": false,
-            "name": "_zcsr_tmp",
+            "domain": "accounts.zoho.in",
+            "httpOnly": true,
+            "name": "JSESSIONID",
             "path": "/",
-            "sameSite": "Strict",
             "secure": true,
-            "value": "4d98bd1a6e6cbd6e33481aacf969259380cc9af03f6d65311112b671604b26d663eaa338df0f05a5b95665754bcf0dc7adc4a7cd30bbc1b805ea3154ee5266bf"
+            "value": "E0385724327A9CB9C5E8AAAEC2FBF229"
         },
         {
             "domain": ".accounts.zoho.in",
@@ -129,62 +121,45 @@
             "name": "6e73717622",
             "path": "/",
             "secure": false,
-            "value": "94da0c17b67b4320ada519c299270f95"
+            "value": "3bcf233c3836eb7934b6f3edc257f951"
         }
     ],
     "people": [
-        {
-            "domain": "people.zoho.in",
-            "httpOnly": true,
-            "name": "JSESSIONID",
-            "path": "/",
-            "secure": true,
-            "value": "E13552534033ED8EAADB163844A0AF2B"
-        },
-        {
-            "domain": "people.zoho.in",
-            "httpOnly": false,
-            "name": "bc5826c95a",
-            "path": "/",
-            "secure": false,
-            "value": "c4f2ab33f666f65ab855f401e6f2a508"
-        },
-        {
-            "domain": "people.zoho.in",
-            "expiry": 1661957389,
-            "httpOnly": false,
-            "name": "HRHR_DNFY",
-            "path": "/",
-            "secure": false,
-            "value": "3567376375488463477"
-        },
         {
             "domain": "people.zoho.in",
             "httpOnly": false,
             "name": "814af6c8e8",
             "path": "/",
             "secure": false,
-            "value": "b5f94cdf8163f2ea94e24ac3ddfc3107"
+            "value": "d42e0381f985f6f8789e754ecbe37fa3"
         },
         {
             "domain": ".zoho.in",
-            "expiry": 1661957389,
+            "expiry": 1664776706,
             "httpOnly": false,
             "name": "com_avcliq_owner",
             "path": "/",
             "sameSite": "Strict",
             "secure": true,
-            "value": "1661957378838"
+            "value": "1664776696321"
         },
         {
             "domain": ".zoho.in",
-            "expiry": 1661957389,
+            "expiry": 1664776706,
             "httpOnly": false,
             "name": "com_chat_owner",
             "path": "/",
             "sameSite": "Strict",
             "secure": true,
-            "value": "1661957378837"
+            "value": "1664776696320"
+        },
+        {
+            "domain": "people.zoho.in",
+            "httpOnly": true,
+            "name": "JSESSIONID",
+            "path": "/",
+            "secure": true,
+            "value": "38353DF4140A7AAD150FF3E2885091D9"
         },
         {
             "domain": ".zoho.in",
@@ -193,7 +168,7 @@
             "path": "/",
             "sameSite": "None",
             "secure": true,
-            "value": "60015448180-c22777f4-19152cb67a0228bad2801dc070f8cd3d"
+            "value": "60015448180-d5cc45bb-3efa55161bcda20e1141468d7fede47b"
         },
         {
             "domain": "people.zoho.in",
@@ -202,7 +177,7 @@
             "path": "/",
             "sameSite": "None",
             "secure": true,
-            "value": "82b10cb438608f1bf08e3cd0daf3e2e4a93bac4dbd8a98b692ef1a94cefe243064fffebec55919ffcb1e14aef447900f4dfee42cf25c29c7765293c66f851b5b"
+            "value": "f326b31f1f54b4fa1649c170a27d9e04b9769a8dab6668a137346c664259f118356437b140a67bddd2b642afc472e7d13649969ebda2ec114968808a9c1d09da"
         },
         {
             "domain": ".zoho.in",
@@ -214,13 +189,13 @@
         },
         {
             "domain": ".zoho.in",
-            "expiry": 1664981372,
+            "expiry": 1667800683,
             "httpOnly": true,
             "name": "_iamadt",
             "path": "/",
             "sameSite": "None",
             "secure": true,
-            "value": "db4ee6c4eb99a25da606fdbec2549765c7aab4e3812fccb4c9035d427d53fbe3ef55ff8bff0144ca3a7bafdcf5d949a2d6fe8ef898ad24bd694bca78db660a89"
+            "value": "db4ee6c4eb99a25da606fdbec25497655eca7d21194fcc89fe894cfde73592f21254727a5dcc2158045911cdff193407fe4c4b10641006e990604ecbd47ac3fd"
         },
         {
             "domain": "people.zoho.in",
@@ -229,7 +204,7 @@
             "path": "/",
             "sameSite": "Strict",
             "secure": true,
-            "value": "82b10cb438608f1bf08e3cd0daf3e2e4a93bac4dbd8a98b692ef1a94cefe243064fffebec55919ffcb1e14aef447900f4dfee42cf25c29c7765293c66f851b5b"
+            "value": "f326b31f1f54b4fa1649c170a27d9e04b9769a8dab6668a137346c664259f118356437b140a67bddd2b642afc472e7d13649969ebda2ec114968808a9c1d09da"
         },
         {
             "domain": "people.zoho.in",
@@ -238,7 +213,7 @@
             "path": "/",
             "sameSite": "None",
             "secure": true,
-            "value": "82b10cb438608f1bf08e3cd0daf3e2e4a93bac4dbd8a98b692ef1a94cefe243064fffebec55919ffcb1e14aef447900f4dfee42cf25c29c7765293c66f851b5b"
+            "value": "f326b31f1f54b4fa1649c170a27d9e04b9769a8dab6668a137346c664259f118356437b140a67bddd2b642afc472e7d13649969ebda2ec114968808a9c1d09da"
         },
         {
             "domain": ".zoho.in",
@@ -251,13 +226,13 @@
         },
         {
             "domain": ".zoho.in",
-            "expiry": 1664981372,
+            "expiry": 1667800683,
             "httpOnly": true,
             "name": "_iambdt",
             "path": "/",
             "sameSite": "None",
             "secure": true,
-            "value": "b46b49110b66906a74ae2af3cbb3ff824e9359d189ab496531051a5ea43a03f5011d73e0649435852ce5e49e247704fc4a250eb1c2869c78caf1f12c442b9a7f"
+            "value": "af65c13b85868980a18b507308d4baa6128f2c39f6ad56fc3a24bdf79397b174ccaeca078d8a3f92a0daccb574e2bac0a0fc333b982d81d12de6a7ae5d03e425"
         },
         {
             "domain": "people.zoho.in",
@@ -265,7 +240,7 @@
             "name": "_zpsid",
             "path": "/",
             "secure": true,
-            "value": "C1120FE8CFAD3F882F6E6DF040CCA543"
+            "value": "46AA9914AC248EE25A015D13486D3B28"
         },
         {
             "domain": "people.zoho.in",
@@ -273,7 +248,7 @@
             "name": "f153d1cace",
             "path": "/",
             "secure": false,
-            "value": "974eda90eefec6ffbd48834efc07a101"
+            "value": "f4c9abf84d4270a75dd45b25f72e6ae7"
         },
         {
             "domain": "people.zoho.in",
@@ -281,7 +256,7 @@
             "name": "9ca8afda3c",
             "path": "/",
             "secure": false,
-            "value": "5fc39e2f42da6ee0d14e52591068bdf5"
+            "value": "86078005dc0afba6347027880130f7df"
         }
     ]
 }
