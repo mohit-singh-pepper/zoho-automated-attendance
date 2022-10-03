@@ -33,8 +33,8 @@ const zlib_1 = require("zlib");
     path: (0, path_1.join)(__dirname, '..', '.env'),
 });
 const algorithm = 'aes-256-cbc';
-const key = process.env.ENCRYPTION_KEY ? Buffer.from(JSON.parse(process.env.ENCRYPTION_KEY)) : crypto.randomBytes(32);
-const iv = process.env.IV ? Buffer.from(JSON.parse(process.env.IV)) : crypto.randomBytes(16);
+const key = process.env.ENCRYPTION_KEY ? Buffer.from(process.env.ENCRYPTION_KEY, 'hex') : crypto.randomBytes(32);
+const iv = process.env.IV ? Buffer.from(process.env.IV, 'hex') : crypto.randomBytes(16);
 function encrypt(text) {
     let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
     let encrypted = cipher.update(text);

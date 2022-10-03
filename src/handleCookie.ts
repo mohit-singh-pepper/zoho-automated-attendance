@@ -10,8 +10,8 @@ config({
 })
 
 const algorithm = 'aes-256-cbc' //Using AES encryption
-const key = process.env.ENCRYPTION_KEY ? Buffer.from(JSON.parse(process.env.ENCRYPTION_KEY)) : crypto.randomBytes(32)
-const iv = process.env.IV ? Buffer.from(JSON.parse(process.env.IV)) : crypto.randomBytes(16)
+const key = process.env.ENCRYPTION_KEY ? Buffer.from(process.env.ENCRYPTION_KEY, 'hex') : crypto.randomBytes(32)
+const iv = process.env.IV ? Buffer.from(process.env.IV, 'hex') : crypto.randomBytes(16)
 
 function encrypt(text: string) {
 	let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv)
