@@ -5,15 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const selenium_webdriver_1 = require("selenium-webdriver");
-const dotenv_1 = require("dotenv");
 const path_1 = require("path");
 const chrome_js_1 = require("selenium-webdriver/chrome.js");
 const axios_1 = __importDefault(require("axios"));
 const getPayload_1 = require("./getPayload");
 const handleCookie_1 = require("./handleCookie");
-(0, dotenv_1.config)({
-    path: (0, path_1.join)(__dirname, '..', '.env'),
-});
 let runs = 0;
 const dashboardURL = `https://people.zoho.in/${process.env.ZOHO_LOCATION_URL}/zp#home/dashboard`;
 const executionStatus = (_a = process.env.EXECUTION_STATUS) !== null && _a !== void 0 ? _a : 'check-in';
@@ -27,6 +23,7 @@ const handleLogs = (entries) => {
 const sleep = async (timeout = 3000) => {
     return await new Promise((resolve) => setTimeout(resolve, timeout));
 };
+const allowedStatuses = ['check-in', 'check-out'];
 const executionString = executionStatus === 'check-in' ? 'Check-In' : 'Check-Out';
 const run = async () => {
     const options = new chrome_js_1.Options();
@@ -50,17 +47,17 @@ const run = async () => {
         const status_tag = await driver.findElement(selenium_webdriver_1.By.id('ZPD_Top_Att_Stat'));
         const buttonAction = await status_tag.getText();
         await sleep(1000);
-        if (buttonAction.toLowerCase() === executionStatus.toLowerCase()) {
-            console.log('executing:', executionStatus);
-            await status_tag.click();
+        if (allowedStatuses.includes(buttonAction.toLowerCase())) {
+            if (buttonAction.toLowerCase() === executionStatus.toLowerCase()) {
+                console.log('executing:', executionStatus);
+                await status_tag.click();
+            }
         }
         else {
-            runs += 1;
             console.log('Failed to do:', executionStatus);
             console.log('Current status:', buttonAction);
             throw new Error('Failed to do: ' + executionStatus);
         }
-        runs += 1;
         await sleep(2000);
         await driver.close();
         if (process.env.SLACK_HOOK) {

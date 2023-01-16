@@ -35,7 +35,6 @@ const zlib_1 = require("zlib");
 const algorithm = 'aes-256-cbc';
 const key = process.env.ENCRYPTION_KEY ? Buffer.from(process.env.ENCRYPTION_KEY, 'hex') : crypto.randomBytes(32);
 const iv = process.env.IV ? Buffer.from(process.env.IV, 'hex') : crypto.randomBytes(16);
-console.log({ iv: iv.toString('hex'), key: key.toString('hex') });
 function encrypt(text) {
     let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
     let encrypted = cipher.update(text);
