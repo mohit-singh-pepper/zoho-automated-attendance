@@ -41,10 +41,3 @@ jobs:
                   ENCRYPTION_IV: ${{ secrets.ENCRYPTION_IV }}
                   ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
                   ZOHO_LOCATION_URL: ${{ secrets.ZOHO_LOCATION_URL }}
-
-            - name: update cookies
-              uses: test-room-7/action-update-file@v1
-              with:
-                  file-path: cookies.json
-                  commit-msg: 'ci: cookies'
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
