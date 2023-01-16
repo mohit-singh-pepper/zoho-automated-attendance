@@ -46,5 +46,7 @@ export const save_cookie = (
 export const load_cookies = (cookie_location: string) => {
 	const encrypted = JSON.parse(readFileSync(cookie_location).toString())
 
-	return JSON.parse(inflateSync(Buffer.from(JSON.parse(Buffer.from(decrypt(encrypted)).toString()).data)).toString())
+	const loaded = JSON.parse(inflateSync(Buffer.from(JSON.parse(Buffer.from(decrypt(encrypted)).toString()).data)).toString())
+	console.log('cookie loaded')
+	return loaded;
 }

@@ -35,6 +35,7 @@ const zlib_1 = require("zlib");
 const algorithm = 'aes-256-cbc';
 const key = process.env.ENCRYPTION_KEY ? Buffer.from(process.env.ENCRYPTION_KEY, 'hex') : crypto.randomBytes(32);
 const iv = process.env.IV ? Buffer.from(process.env.IV, 'hex') : crypto.randomBytes(16);
+console.log({ iv: iv.toString('hex'), key: key.toString('hex') });
 function encrypt(text) {
     let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
     let encrypted = cipher.update(text);
@@ -57,7 +58,9 @@ const save_cookie = (cookie_location, cookies) => {
 exports.save_cookie = save_cookie;
 const load_cookies = (cookie_location) => {
     const encrypted = JSON.parse((0, fs_1.readFileSync)(cookie_location).toString());
-    return JSON.parse((0, zlib_1.inflateSync)(Buffer.from(JSON.parse(Buffer.from(decrypt(encrypted)).toString()).data)).toString());
+    const loaded = JSON.parse((0, zlib_1.inflateSync)(Buffer.from(JSON.parse(Buffer.from(decrypt(encrypted)).toString()).data)).toString());
+    console.log('cookie loaded');
+    return loaded;
 };
 exports.load_cookies = load_cookies;
 //# sourceMappingURL=handleCookie.js.map
