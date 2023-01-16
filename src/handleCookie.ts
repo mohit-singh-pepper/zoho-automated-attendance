@@ -1,13 +1,7 @@
 //Checking the crypto module
 import * as crypto from 'crypto'
-import { config } from 'dotenv'
 import { readFileSync, writeFileSync } from 'fs'
-import { join } from 'path'
 import { deflateSync, inflateSync } from 'zlib'
-
-config({
-	path: join(__dirname, '..', '.env'),
-})
 
 const algorithm = 'aes-256-cbc' //Using AES encryption
 const key = process.env.ENCRYPTION_KEY ? Buffer.from(process.env.ENCRYPTION_KEY, 'hex') : crypto.randomBytes(32)

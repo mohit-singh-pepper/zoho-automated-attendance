@@ -25,13 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.load_cookies = exports.save_cookie = void 0;
 const crypto = __importStar(require("crypto"));
-const dotenv_1 = require("dotenv");
 const fs_1 = require("fs");
-const path_1 = require("path");
 const zlib_1 = require("zlib");
-(0, dotenv_1.config)({
-    path: (0, path_1.join)(__dirname, '..', '.env'),
-});
 const algorithm = 'aes-256-cbc';
 const key = process.env.ENCRYPTION_KEY ? Buffer.from(process.env.ENCRYPTION_KEY, 'hex') : crypto.randomBytes(32);
 const iv = process.env.IV ? Buffer.from(process.env.IV, 'hex') : crypto.randomBytes(16);
