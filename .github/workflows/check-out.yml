@@ -5,7 +5,7 @@ name: Check-Out Action
 
 on:
     schedule:
-        - cron: '0 12 * * 1-5'
+        - cron: '30 7 * * 1-5'
     workflow_dispatch:
     repository_dispatch:
         types: [check-out]
