@@ -25,8 +25,8 @@ const sleep = async (timeout = 3000) => {
 const allowedStatuses = ['check-in', 'check-out'];
 const executionString = executionStatus === 'check-in' ? 'Check-In' : 'Check-Out'
 const run = async (): Promise<void> => {
-	const options = new Options()
-	options.addArguments('--headless');
+	const options = new Options();
+	// options.addArguments('--headless');
 	['--incognito', '--js-flags=--expose-gc'].forEach(function (v) {
 		options.addArguments(v)
 	})
