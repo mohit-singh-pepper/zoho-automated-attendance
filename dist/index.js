@@ -27,7 +27,6 @@ const allowedStatuses = ['check-in', 'check-out'];
 const executionString = executionStatus === 'check-in' ? 'Check-In' : 'Check-Out';
 const run = async () => {
     const options = new chrome_js_1.Options();
-    options.addArguments('--headless');
     ['--incognito', '--js-flags=--expose-gc'].forEach(function (v) {
         options.addArguments(v);
     });

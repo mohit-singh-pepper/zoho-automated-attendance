@@ -27,6 +27,11 @@ exports.load_cookies = exports.save_cookie = void 0;
 const crypto = __importStar(require("crypto"));
 const fs_1 = require("fs");
 const zlib_1 = require("zlib");
+const dotenv_1 = require("dotenv");
+const path_1 = require("path");
+(0, dotenv_1.config)({
+    path: (0, path_1.join)(__dirname, '..', '.env'),
+});
 const algorithm = 'aes-256-cbc';
 const key = process.env.ENCRYPTION_KEY ? Buffer.from(process.env.ENCRYPTION_KEY, 'hex') : crypto.randomBytes(32);
 const iv = process.env.IV ? Buffer.from(process.env.IV, 'hex') : crypto.randomBytes(16);
