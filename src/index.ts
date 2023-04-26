@@ -26,8 +26,7 @@ const allowedStatuses = ['check-in', 'check-out'];
 const executionString = executionStatus === 'check-in' ? 'Check-In' : 'Check-Out'
 const run = async (): Promise<void> => {
 	const options = new Options();
-	// options.addArguments('--headless');
-	['--incognito', '--js-flags=--expose-gc'].forEach(function (v) {
+	['--incognito', '--js-flags=--expose-gc', '--headless', "--no-sandbox", "--disable-dev-shm-usage"].forEach(function (v) {
 		options.addArguments(v)
 	})
 	options.setLoggingPrefs({performance: 'ALL', browser: 'ALL', client: 'ALL'})
@@ -48,12 +47,12 @@ const run = async (): Promise<void> => {
 		const status_tag = await driver.findElement(By.id('ZPD_Top_Att_Stat'))
 		const buttonAction = await status_tag.getText()
 		await sleep(1000)
-		if(allowedStatuses.includes(buttonAction.toLowerCase())) {
+		if (allowedStatuses.includes(buttonAction.toLowerCase())) {
 			if (buttonAction.toLowerCase() === executionStatus.toLowerCase()) {
 				console.log('executing:', executionStatus)
 				await status_tag.click()
 			}
-		}else {
+		} else {
 			console.log('Failed to do:', executionStatus)
 			console.log('Current status:', buttonAction)
 			throw new Error('Failed to do: ' + executionStatus)
