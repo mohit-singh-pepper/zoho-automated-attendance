@@ -27,7 +27,7 @@ const allowedStatuses = ['check-in', 'check-out'];
 const executionString = executionStatus === 'check-in' ? 'Check-In' : 'Check-Out';
 const run = async () => {
     const options = new chrome_js_1.Options();
-    ['--incognito', '--js-flags=--expose-gc'].forEach(function (v) {
+    ['--incognito', '--js-flags=--expose-gc', '--headless', "--no-sandbox", "--disable-dev-shm-usage"].forEach(function (v) {
         options.addArguments(v);
     });
     options.setLoggingPrefs({ performance: 'ALL', browser: 'ALL', client: 'ALL' });
