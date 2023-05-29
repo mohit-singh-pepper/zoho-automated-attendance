@@ -43,7 +43,8 @@ const run = async (): Promise<void> => {
 		cookies = load_cookies(cookie_location)
 		await addCookies(cookies, driver)
 		await driver.get(dashboardURL)
-		await sleep(1000)
+		await sleep(2000)
+		console.log("driver current path: ", await driver.getCurrentUrl());
 		const status_tag = await driver.findElement(By.id('ZPD_Top_Att_Stat'))
 		const buttonAction = await status_tag.getText()
 		await sleep(1000)
