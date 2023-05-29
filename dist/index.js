@@ -105,15 +105,15 @@ async function addCookies(cookies, driver) {
         await addCookie(cookies.people, driver);
         return true;
     }
-    catch (_a) {
-        console.log('adding cookie failed');
+    catch (err) {
+        console.error('adding cookie failed', err);
         return false;
     }
 }
 async function addCookie(cookies, driver) {
     for (let index = 0; index < cookies.length; index++) {
         const cookie = cookies[index];
-        await driver.manage().addCookie(cookie);
+        await driver.manage().addCookie(Object.assign(Object.assign({}, cookie), { secure: true }));
     }
 }
 async function printLogs(driver) {

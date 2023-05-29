@@ -122,8 +122,8 @@ async function addCookies(cookies: { accounts: any[]; people: any[] }, driver: W
 		await addCookie(cookies.people, driver)
 
 		return true
-	} catch {
-		console.log('adding cookie failed')
+	} catch(err) {
+		console.error('adding cookie failed', err)
 		return false
 	}
 }
@@ -131,7 +131,7 @@ async function addCookies(cookies: { accounts: any[]; people: any[] }, driver: W
 async function addCookie(cookies: any[], driver: WebDriver) {
 	for (let index = 0; index < cookies.length; index++) {
 		const cookie = cookies[index]
-		await driver.manage().addCookie(cookie)
+		await driver.manage().addCookie({...cookie, secure: true})
 	}
 }
 

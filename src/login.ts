@@ -27,7 +27,9 @@ const run = async (): Promise<void> => {
 		'profile.default_content_setting_values.geolocation': 2,
 	})
 
-	const driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build()
+	const driver = await new Builder()
+		.forBrowser('firefox')
+		.setChromeOptions(options).build()
 	try {
 		await handleLogin(driver)
 		await sleep(2_000)
