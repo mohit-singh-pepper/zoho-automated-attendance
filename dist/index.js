@@ -101,8 +101,10 @@ async function addCookies(cookies, driver) {
     try {
         await driver.get('https://accounts.zoho.in/');
         await driver.manage().window().setRect({ width: 1440, height: 900 });
+        console.log("adding cookies for: " + await driver.getCurrentUrl());
         await addCookie(cookies.accounts, driver);
         await driver.get('https://people.zoho.in/');
+        console.log("adding cookies for: " + await driver.getCurrentUrl());
         await addCookie(cookies.people, driver);
         return true;
     }
