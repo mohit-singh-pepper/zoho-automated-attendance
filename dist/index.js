@@ -27,7 +27,7 @@ const allowedStatuses = ['check-in', 'check-out'];
 const executionString = executionStatus === 'check-in' ? 'Check-In' : 'Check-Out';
 const run = async () => {
     const options = new chrome_js_1.Options();
-    ['--incognito', '--js-flags=--expose-gc', '--headless', "--no-sandbox", "--disable-dev-shm-usage"].forEach(function (v) {
+    ['--incognito', '--js-flags=--expose-gc', '--headless', "--no-sandbox", "--disable-dev-shm-usage", "'--lang=en-IN'"].forEach(function (v) {
         options.addArguments(v);
     });
     options.setLoggingPrefs({ performance: 'ALL', browser: 'ALL', client: 'ALL' });
@@ -43,7 +43,7 @@ const run = async () => {
         await addCookies(cookies, driver);
         await driver.get(dashboardURL);
         await sleep(2000);
-        console.log("driver current path: ", await driver.getCurrentUrl());
+        console.log("driver current path: '--lang=en-IN'", await driver.getCurrentUrl());
         const status_tag = await driver.findElement(selenium_webdriver_1.By.id('ZPD_Top_Att_Stat'));
         const buttonAction = await status_tag.getText();
         await sleep(1000);
@@ -103,7 +103,7 @@ async function addCookies(cookies, driver) {
         await driver.manage().window().setRect({ width: 1440, height: 900 });
         console.log("adding cookies for: " + await driver.getCurrentUrl());
         await addCookie(cookies.accounts, driver);
-        await driver.get('https://people.zoho.in/');
+        await driver.get('https://people.zoho.in/404');
         console.log("adding cookies for: " + await driver.getCurrentUrl());
         await addCookie(cookies.people, driver);
         return true;
