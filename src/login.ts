@@ -51,7 +51,7 @@ run()
 
 async function handleLogin(driver: WebDriver) {
 	await driver.get('https://accounts.zoho.in/signin')
-	// await sleep(1000)
+	await sleep(1000)
 	await driver.findElement(By.id('login_id')).sendKeys(process.env.ZOHO_EMAIL!)
 	await driver.findElement(By.id('login_id')).sendKeys(Key.ENTER)
 	await sleep(1000)
@@ -61,7 +61,7 @@ async function handleLogin(driver: WebDriver) {
 	await driver.findElement(By.id('password')).sendKeys(Key.ENTER)
 
 	// wait until url changes for selenium
-	await sleep(8000)
+	await sleep(20000)
 
 	await driver.get('https://accounts.zoho.in/')
 
